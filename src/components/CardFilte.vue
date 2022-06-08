@@ -16,42 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-const type = ref('')
-const pack = ref('')
-
-const typeOptions= [{
-  label: "江湖卡",
-  value: "江湖卡"
-}, {
-  label: "起始卡",
-  value: "起始卡"
-}, {
-  label: "结局卡",
-  value: "结局卡"
-}, {
-  label: "奇遇卡",
-  value: "奇遇卡"
-}, {
-  label: "箴言卡",
-  value: "箴言卡"
-}]
-const packOptions = [{
-  label: "标准包",
-  value: "标准包"
-}, {
-  label: "江湖夜雨",
-  value: "江湖夜雨"
-}, {
-  label: "第一次众筹赠送",
-  value: "第一次众筹赠送"
-}, {
-  label: "儿女情长",
-  value: "儿女情长"
-}]
+import { ref } from 'vue';
+import { mainStore } from "../store/";
+import { storeToRefs } from 'pinia';
+const type = ref('');
+const pack = ref('');
+const store = mainStore();
+const { typeOptions,packOptions } = storeToRefs(store);
 
 function search() {
-  return console.log(type.value + ' ' + pack.value);
+  store.getCardTable(pack.value,type.value)
 }
 </script>
 

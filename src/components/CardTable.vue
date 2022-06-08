@@ -1,14 +1,31 @@
 <template>
     <CardFilte />
+
     <div id="tableBox">
-        <el-table :data="cardTableData" stripe style="width: 100%" height="100%" table-layout="auto">
-            <el-table-column type="selection" />
-            <el-table-column prop="id" label="卡牌编号" />
-            <el-table-column prop="font" label="卡牌名称" />
-            <el-table-column prop="back" label="卡牌描述" />
-            <el-table-column prop="type" label="卡牌类型" />
-            <el-table-column prop="pack" label="从属包" />
-        </el-table>
+        <el-container>
+            <el-header>
+                <el-col :span="4">
+                    <el-button type="primary" id="addBtn">新增</el-button>
+                    <el-button type="danger" id="addBtn">删除</el-button>
+                </el-col>
+            </el-header>
+            <el-main>
+                <el-table :data="cardTable" stripe style="width: 100%" height="100%" table-layout="auto">
+                    <el-table-column type="selection" />
+                    <el-table-column prop="id" label="卡牌编号" />
+                    <el-table-column prop="font" label="卡牌名称" />
+                    <el-table-column prop="back" label="卡牌描述" />
+                    <el-table-column prop="type" label="卡牌类型" />
+                    <el-table-column prop="pack" label="从属包" />
+                    <el-table-column label="操作">
+                        <el-button size="small">编辑</el-button>
+                    </el-table-column>
+                </el-table>
+            </el-main>
+        </el-container>
+
+
+
     </div>
 </template>
 
@@ -17,7 +34,7 @@ import CardFilte from "./CardFilte.vue";
 import { mainStore } from "../store/index";
 import { storeToRefs } from 'pinia';
 const store = mainStore();
-const { cardTableData } = storeToRefs(store);
+const { cardTable } = storeToRefs(store);
 
 </script>
 
