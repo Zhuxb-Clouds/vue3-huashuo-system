@@ -97,6 +97,9 @@ export const mainStore = defineStore('main', {
       // 传入json格式的form，包含type, pack, front, back,四个元素，改变cardTableData并调用getCardTable
       this.cardTableData.push({ id: this.cardTableData.length + 1 ,...form})
       this.getCardTable("","")
+    },
+    getCardById(id:number){
+      return this.cardTableData.filter(o=>o.id==id)[0]
     }
   }
 })

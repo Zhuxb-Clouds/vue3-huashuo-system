@@ -1,39 +1,12 @@
 <template>
     <div>
         <CardFilte />
-        <el-dialog v-model="dialogVisible" title="新增卡牌" width="20%" :before-close="handleClose">
-            <el-form label-position="right" label-width="25%" :rules="formRules" :model="form" ref="ruleFormRef">
-                <el-form-item label="卡牌类型" prop="type">
-                    <el-select v-model="form.type" placeholder="请选择卡牌类型">
-                        <el-option v-for="item in typeOptions" :key="item.value" :label="item.label"
-                            :value="item.value" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="从属包" prop="pack">
-                    <el-select v-model="form.pack" placeholder="请选择卡牌从属包">
-                        <el-option v-for="item in packOptions" :key="item.value" :label="item.label"
-                            :value="item.value" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="卡牌名" prop="front">
-                    <el-input v-model="form.front" />
-                </el-form-item>
-                <el-form-item label="卡牌描述" prop="back">
-                    <el-input v-model="form.back" type="textarea" />
-                </el-form-item>
-            </el-form>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button type="primary" @click="handleConfirm">确认</el-button>
-                    <el-button @click="handleClose">取消</el-button>
-                </span>
-            </template>
-        </el-dialog>
+        <CardPopup :IsShow="dialogVisible" :cardId="cardId" @closePopup="closePopup" />
         <div id="tableBox">
             <el-container>
                 <el-header>
                     <el-col :span="4">
-                        <el-button id="addBtn" @click="dialogVisible = true;">新增</el-button>
+                        <el-button id="addBtn" @click="openPopup">新增</el-button>
                         <el-button type="danger" id="addBtn">删除</el-button>
                     </el-col>
                 </el-header>
@@ -46,7 +19,10 @@
                         <el-table-column prop="type" label="卡牌类型" />
                         <el-table-column prop="pack" label="从属包" />
                         <el-table-column label="操作">
-                            <el-button size="small">编辑</el-button>
+                            <template #default="{ row }">
+                                <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>
+                            </template>
+
                         </el-table-column>
                     </el-table>
                 </el-main>
@@ -57,49 +33,28 @@
 
 <script setup lang="ts">
 // import CardFilte from "./CardFilte.vue";
-import { reactive, ref } from 'vue'
+import CardPopup from "./CardPopup.vue";
+import { ref } from 'vue'
 import { mainStore } from "../store/index";
 import { storeToRefs } from 'pinia';
-import type { FormInstance, FormRules } from 'element-plus'
+
+const cardId = ref()
 
 const store = mainStore();
-const { cardTable, typeOptions, packOptions } = storeToRefs(store);
-const dialogVisible = ref(false)
+const { cardTable } = storeToRefs(store);
+const dialogVisible = ref(false);
 
-interface cardDetal {
-    type: string;
-    pack: string;
-    front: string;
-    back: string;
-}
-const form: cardDetal = reactive({
-    type: "",
-    pack: "",
-    front: "",
-    back: "",
-})
-//表单验证弹窗输入
-const ruleFormRef = ref<FormInstance>()
-const formRules = reactive<FormRules>({
-    type: [{ required: true }],
-    pack: [{ required: true }],
-    front: [{ required: true, min: 1, max: 5, }],
-})
 
-const handleClose = (done: () => void) => {//新增弹窗内点击取消
-    dialogVisible.value = false;
-    done()
-}
-const handleConfirm = () => {//新增弹窗内点击确定
-    //调用piniaAction：store.addCard()函数
-    store.addCard({
-        type: form.type,
-        pack: form.pack,
-        front: form.front,
-        back: form.back,
-    });
-    // 传入参数：form，返回空值
-    dialogVisible.value = false;
+const openPopup = () => dialogVisible.value = true;
+const closePopup = () => dialogVisible.value = false;
+
+// 编辑handle函数
+const handleEdit = function (rowId: number) {
+    console.log('rowId',rowId)
+    // 传入id ,获取id对应的卡牌信息,再prop入弹窗子组件。
+    cardId.value = rowId
+    console.log('cardId.value',cardId.value)
+    openPopup()
 }
 </script>
 
