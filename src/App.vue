@@ -1,11 +1,11 @@
 <template>
-  <CardTable />
+  <CardCURD />
 </template>
 
 <script setup lang="ts">
 // import Login from "./components/Login.vue";
 
-import CardTable from "./components/CardTable.vue";
+import CardCURD from "./page/CardCURD.vue";
 
 
 

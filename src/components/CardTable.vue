@@ -33,7 +33,7 @@
             <el-container>
                 <el-header>
                     <el-col :span="4">
-                        <el-button type="primary" id="addBtn" @click="toTonfigure">新增</el-button>
+                        <el-button id="addBtn" @click="toTonfigure">新增</el-button>
                         <el-button type="danger" id="addBtn">删除</el-button>
                     </el-col>
                 </el-header>
@@ -58,7 +58,6 @@
 <script setup lang="ts">
 // import CardFilte from "./CardFilte.vue";
 import { reactive, ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
 import { mainStore } from "../store/index";
 import { storeToRefs } from 'pinia';
 const store = mainStore();
@@ -72,13 +71,8 @@ const form = reactive({
 })
 
 const handleClose = (done: () => void) => {
-    ElMessageBox.confirm('你确定要关闭“新增卡牌”页面吗？')
-        .then(() => {
-            done()
-        })
-        .catch(() => {
-            // catch error
-        })
+    dialogVisible.value = false;
+    done()
 }
 const handleConfirm = () => {
     dialogVisible.value = false;

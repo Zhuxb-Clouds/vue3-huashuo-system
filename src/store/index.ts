@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 export const mainStore = defineStore('main', {
   state: () => {
     return {
-      cardTable:[{}],
+      cardTable: [{}],
       typeOptions: [{
         label: "江湖牌",
         value: "江湖牌"
@@ -80,9 +80,12 @@ export const mainStore = defineStore('main', {
   getters: {},
   actions: {
     getCardTable(pack: string, type: string) {
-      this.cardTable = this.cardTableData.filter(item =>
-        (item.type == type || type == '') && (item.pack == pack || pack == '')
-      )
+      if (type == '' && pack == '') { this.cardTable = this.cardTableData }
+      else {
+        this.cardTable = this.cardTableData.filter(item =>
+          (item.type == type || type == '') && (item.pack == pack || pack == '')
+        )
+      }
     }
   }
 })

@@ -16,17 +16,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref ,onMounted } from 'vue';
 import { mainStore } from "../store/";
 import { storeToRefs } from 'pinia';
 const type = ref('');
 const pack = ref('');
 const store = mainStore();
 const { typeOptions,packOptions } = storeToRefs(store);
-
+//调用piniaActions搜索
 function search() {
   store.getCardTable(pack.value,type.value)
 }
+onMounted(() => {
+  search()
+})
+
+
 </script>
 
 <style scoped>
