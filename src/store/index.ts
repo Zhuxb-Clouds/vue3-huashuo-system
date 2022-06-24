@@ -35,42 +35,42 @@ export const mainStore = defineStore('main', {
       cardTableData: [{
         id: 1,
         type: "江湖牌",
-        font: "奇门兵器",
+        front: "奇门兵器",
         back: "",
         pack: "标准包"
 
       }, {
         id: 2,
         type: "江湖牌",
-        font: "奇门兵器",
+        front: "奇门兵器",
         back: "",
         pack: "标准包"
 
       }, {
         id: 3,
         type: "江湖牌",
-        font: "奇门兵器",
+        front: "奇门兵器",
         back: "",
         pack: "标准包"
 
       }, {
         id: 4,
         type: "江湖牌",
-        font: "奇门兵器",
+        front: "奇门兵器",
         back: "",
         pack: "标准包"
 
       }, {
         id: 5,
         type: "江湖牌",
-        font: "奇门兵器",
+        front: "奇门兵器",
         back: "",
         pack: "标准包"
 
       }, {
         id: 6,
         type: "江湖牌",
-        font: "奇门兵器",
+        front: "奇门兵器",
         back: "",
         pack: "标准包"
 
