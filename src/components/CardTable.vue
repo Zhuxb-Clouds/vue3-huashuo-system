@@ -2,23 +2,23 @@
     <div>
         <CardFilte />
         <el-dialog v-model="dialogVisible" title="新增卡牌" width="20%" :before-close="handleClose">
-            <el-form label-position="right" label-width="20%">
-                <el-form-item label="卡牌类型">
+            <el-form label-position="right" label-width="25%" :rules="formRules" :model="form" ref="ruleFormRef">
+                <el-form-item label="卡牌类型" prop="type">
                     <el-select v-model="form.type" placeholder="请选择卡牌类型">
                         <el-option v-for="item in typeOptions" :key="item.value" :label="item.label"
                             :value="item.value" />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="从属包">
+                <el-form-item label="从属包" prop="pack">
                     <el-select v-model="form.pack" placeholder="请选择卡牌从属包">
                         <el-option v-for="item in packOptions" :key="item.value" :label="item.label"
                             :value="item.value" />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="卡牌名">
+                <el-form-item label="卡牌名" prop="front">
                     <el-input v-model="form.front" />
                 </el-form-item>
-                <el-form-item label="卡牌描述">
+                <el-form-item label="卡牌描述" prop="back">
                     <el-input v-model="form.back" type="textarea" />
                 </el-form-item>
             </el-form>
@@ -33,12 +33,12 @@
             <el-container>
                 <el-header>
                     <el-col :span="4">
-                        <el-button id="addBtn" @click="toTonfigure">新增</el-button>
+                        <el-button id="addBtn" @click="dialogVisible = true;">新增</el-button>
                         <el-button type="danger" id="addBtn">删除</el-button>
                     </el-col>
                 </el-header>
                 <el-main>
-                    <el-table :data="cardTable" stripe style="width: 100%" height="100%" table-layout="auto">
+                    <el-table :data="cardTable" stripe style="width: 100% ;height: 200%" table-layout="auto">
                         <el-table-column type="selection" />
                         <el-table-column prop="id" label="卡牌编号" />
                         <el-table-column prop="front" label="卡牌名称" />
@@ -60,27 +60,46 @@
 import { reactive, ref } from 'vue'
 import { mainStore } from "../store/index";
 import { storeToRefs } from 'pinia';
+import type { FormInstance, FormRules } from 'element-plus'
+
 const store = mainStore();
 const { cardTable, typeOptions, packOptions } = storeToRefs(store);
 const dialogVisible = ref(false)
-const form = reactive({
-    type: '',
-    pack: '',
-    front: '',
-    back: '',
+
+interface cardDetal {
+    type: string;
+    pack: string;
+    front: string;
+    back: string;
+}
+const form: cardDetal = reactive({
+    type: "",
+    pack: "",
+    front: "",
+    back: "",
+})
+//表单验证弹窗输入
+const ruleFormRef = ref<FormInstance>()
+const formRules = reactive<FormRules>({
+    type: [{ required: true }],
+    pack: [{ required: true }],
+    front: [{ required: true, min: 1, max: 5, }],
 })
 
-const handleClose = (done: () => void) => {
+const handleClose = (done: () => void) => {//新增弹窗内点击取消
     dialogVisible.value = false;
     done()
 }
-const handleConfirm = () => {
+const handleConfirm = () => {//新增弹窗内点击确定
+    //调用piniaAction：store.addCard()函数
+    store.addCard({
+        type: form.type,
+        pack: form.pack,
+        front: form.front,
+        back: form.back,
+    });
+    // 传入参数：form，返回空值
     dialogVisible.value = false;
-    // emit('close',false)
-}
-const toTonfigure = function () {
-    dialogVisible.value = true;
-
 }
 </script>
 

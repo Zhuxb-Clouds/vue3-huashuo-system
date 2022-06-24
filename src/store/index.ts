@@ -1,4 +1,10 @@
 import { defineStore } from 'pinia';
+interface cardDetal {
+  type: string;
+  pack: string;
+  front: string;
+  back: string;
+}
 export const mainStore = defineStore('main', {
   state: () => {
     return {
@@ -86,6 +92,11 @@ export const mainStore = defineStore('main', {
           (item.type == type || type == '') && (item.pack == pack || pack == '')
         )
       }
+    },
+    addCard(form:cardDetal) {
+      // 传入json格式的form，包含type, pack, front, back,四个元素，改变cardTableData并调用getCardTable
+      this.cardTableData.push({ id: this.cardTableData.length + 1 ,...form})
+      this.getCardTable("","")
     }
   }
 })
