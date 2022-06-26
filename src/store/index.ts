@@ -97,8 +97,8 @@ export const mainStore = defineStore('main', {
     editCard(id:number,form:cardDetal){
       this.cardTableData.forEach((item,index,arr)=>{if(item.id==id){arr[index]={id:id,...form}}})
       this.getCardTable("","")
-      console.log('this.cardTableData',this.cardTableData)
-      console.log('this.cardTable',this.cardTable)
+      // console.log('this.cardTableData',this.cardTableData)
+      // console.log('this.cardTable',this.cardTable)
     },
     deleteCardById(id:number){
       this.cardTableData.forEach((o,i,a)=>{if(o.id==id){a.splice(i,1)}})

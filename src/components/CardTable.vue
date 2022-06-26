@@ -54,17 +54,16 @@ const multipleSelection = ref<cardDetal[]>([])
 const openPopup = () => dialogVisible.value = true;
 const closePopup = () => dialogVisible.value = false;
 const handleSelectionChange = (val: cardDetal[]) => {
-    // do nothing
-    console.log('multipleSelection.value', multipleSelection.value)
-    console.log('val', val)
+    // console.log('multipleSelection.value', multipleSelection.value)
+    // console.log('val', val)
     multipleSelection.value = val
 };
 // 编辑handle函数
 const handleEdit = function (rowId: number) {
-    console.log('rowId', rowId)
+    // console.log('rowId', rowId)
     // 传入id ,获取id对应的卡牌信息,再prop入弹窗子组件。
     cardId.value = rowId
-    console.log('cardId.value', cardId.value)
+    // console.log('cardId.value', cardId.value)
     openPopup()
 }
 
