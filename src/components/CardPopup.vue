@@ -57,12 +57,14 @@ const form: cardDetal = reactive({
 })
 watch(() => props.cardId, (val) => {
     // console.log("检测到cardId变化",val)
-    if(val){
+    if(val!==0){
         const data = store.getCardById(val)
         form.type = data.type;
         form.pack = data.pack;
         form.front = data.front;
         form.back = data.back;
+    }else {
+        ruleFormRef.value?.resetFields();
     }
     cardId.value = val;
     

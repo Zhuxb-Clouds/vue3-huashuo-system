@@ -1,13 +1,10 @@
 <template>
-  <CardCURD />
+  <router-view></router-view>
 </template>
 
 <script setup lang="ts">
-// import Login from "./components/Login.vue";
-
-import CardCURD from "./page/CardCURD.vue";
-
-
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
 </script>
 
@@ -17,6 +14,6 @@ import CardCURD from "./page/CardCURD.vue";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  
+
 }
 </style>

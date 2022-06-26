@@ -6,7 +6,7 @@
             <el-container>
                 <el-header>
                     <el-col :span="4">
-                        <el-button id="addBtn" @click="openPopup">新增</el-button>
+                        <el-button id="addBtn" @click="handleAdd">新增</el-button>
                         <el-button type="danger" id="addBtn" @click="handleDelet">删除</el-button>
                     </el-col>
                 </el-header>
@@ -43,7 +43,7 @@ import { cardDetal } from "../type/index.js";
 
 
 
-const cardId = ref()
+const cardId = ref(0)
 
 const store = mainStore();
 const { cardTable } = storeToRefs(store);
@@ -58,7 +58,13 @@ const handleSelectionChange = (val: cardDetal[]) => {
     // console.log('val', val)
     multipleSelection.value = val
 };
-// 编辑handle函数
+
+// 新增handel函数
+const handleAdd = function(){
+    cardId.value = 0
+    openPopup()
+}
+// 编辑handel函数
 const handleEdit = function (rowId: number) {
     // console.log('rowId', rowId)
     // 传入id ,获取id对应的卡牌信息,再prop入弹窗子组件。

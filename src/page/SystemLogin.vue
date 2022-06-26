@@ -13,6 +13,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter,useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
+
 
 const code = {
     account: "admin",
@@ -22,8 +26,9 @@ let account = ref("")
 let password = ref("")
 function check() {
     if (account.value == code.account && password.value == code.password) {
-        console.log("通过验证",account);
-    }else{
+        console.log("通过验证", router);
+        router.push({ name: 'cardtable' })
+    } else {
         console.log("验证失败");
     }
 }
