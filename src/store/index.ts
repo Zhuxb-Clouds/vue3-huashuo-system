@@ -1,10 +1,5 @@
 import { defineStore } from 'pinia';
-interface cardDetal {
-  type: string;
-  pack: string;
-  front: string;
-  back: string;
-}
+import { cardDetal } from "../type/index.js";
 export const mainStore = defineStore('main', {
   state: () => {
     return {
@@ -104,6 +99,14 @@ export const mainStore = defineStore('main', {
       this.getCardTable("","")
       console.log('this.cardTableData',this.cardTableData)
       console.log('this.cardTable',this.cardTable)
+    },
+    deleteCardById(id:number){
+      this.cardTableData.forEach((o,i,a)=>{if(o.id==id){a.splice(i,1)}})
+    },
+    deleteCard(idArr:(number | undefined)[]){
+      for (let i = 0; i < idArr.length; i++) {
+        this.deleteCardById(idArr[i]??0)
+      }
     }
   }
 })

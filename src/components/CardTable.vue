@@ -7,17 +7,18 @@
                 <el-header>
                     <el-col :span="4">
                         <el-button id="addBtn" @click="openPopup">新增</el-button>
-                        <el-button type="danger" id="addBtn">删除</el-button>
+                        <el-button type="danger" id="addBtn" @click="handleDelet">删除</el-button>
                     </el-col>
                 </el-header>
                 <el-main>
-                    <el-table :data="cardTable" stripe style="width: 100% ;height: 200%" table-layout="auto">
+                    <el-table :data="cardTable" stripe style="width: 100% ;height: 200%" table-layout="auto"
+                        @selection-change="handleSelectionChange" ref="multipleTableRef">
                         <el-table-column type="selection" />
-                        <el-table-column prop="id" label="卡牌编号"  width="180"/>
-                        <el-table-column prop="front" label="卡牌名称" width="300"/>
-                        <el-table-column prop="back" label="卡牌描述" width="500"/>
-                        <el-table-column prop="type" label="卡牌类型" width="180"/>
-                        <el-table-column prop="pack" label="从属包" width="180"/>
+                        <el-table-column prop="id" label="卡牌编号" width="180" />
+                        <el-table-column prop="front" label="卡牌名称" width="300" />
+                        <el-table-column prop="back" label="卡牌描述" width="500" />
+                        <el-table-column prop="type" label="卡牌类型" width="180" />
+                        <el-table-column prop="pack" label="从属包" width="180" />
                         <el-table-column label="操作">
                             <template #default="{ row }">
                                 <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>
@@ -33,28 +34,77 @@
 
 <script setup lang="ts">
 // import CardFilte from "./CardFilte.vue";
-import CardPopup from "./CardPopup.vue";
-import { ref } from 'vue'
-import { mainStore } from "../store/index";
+import { ref, h } from 'vue'
+import { ElTable, ElMessage, ElMessageBox } from 'element-plus'
 import { storeToRefs } from 'pinia';
+import CardPopup from "./CardPopup.vue";
+import { mainStore } from "../store/index";
+import { cardDetal } from "../type/index.js";
+
+
 
 const cardId = ref()
 
 const store = mainStore();
 const { cardTable } = storeToRefs(store);
 const dialogVisible = ref(false);
-
+const multipleTableRef = ref<InstanceType<typeof ElTable>>()
+const multipleSelection = ref<cardDetal[]>([])
 
 const openPopup = () => dialogVisible.value = true;
 const closePopup = () => dialogVisible.value = false;
-
+const handleSelectionChange = (val: cardDetal[]) => {
+    // do nothing
+    console.log('multipleSelection.value', multipleSelection.value)
+    console.log('val', val)
+    multipleSelection.value = val
+};
 // 编辑handle函数
 const handleEdit = function (rowId: number) {
-    console.log('rowId',rowId)
+    console.log('rowId', rowId)
     // 传入id ,获取id对应的卡牌信息,再prop入弹窗子组件。
     cardId.value = rowId
-    console.log('cardId.value',cardId.value)
+    console.log('cardId.value', cardId.value)
     openPopup()
+}
+
+// 删除handel函数
+const handleDelet = function () {
+    //do nothing
+    // 先判断是否有选中，如果没有直接返回
+    if (multipleSelection.value.length == 0) {
+        ElMessage({
+            message: h('p', null, [
+                h('span', null, '你没有选中任何卡牌，无法删除。'),
+            ]),
+        })
+        return null
+    }
+    ElMessageBox.confirm(
+        '你确认要删除这些卡牌吗？',
+        '删除卡牌',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(() => {
+            let idArr:(number | undefined)[] = multipleSelection.value.map(item=>item.id)
+            store.deleteCard(idArr)
+            ElMessage({
+                type: 'success',
+                message: '成功删除卡牌',
+            })
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '删除取消',
+            })
+        })
+    // 如果选中，弹窗确认要删除
+    // store.deleteCard
 }
 </script>
 

@@ -3,4 +3,5 @@ export interface cardDetal {
     pack: string;
     front: string;
     back: string;
+    id?:number;
 }
