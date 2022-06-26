@@ -2,13 +2,13 @@
   <div id="filterBox">
     <div class="selectBox">
       <span class="descript">卡牌类型</span>
-      <el-select v-model="type" class="m-2" placeholder="Select" size="large" @change="search">
+      <el-select v-model="type" class="m-2" placeholder="请选择卡牌类型" size="large" @change="search">
         <el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
     <div class="selectBox">
       <span class="descript">从属包</span>
-      <el-select v-model="pack" class="m-2" placeholder="Select" size="large" @change="search">
+      <el-select v-model="pack" class="m-2" placeholder="请选择包从属" size="large" @change="search">
         <el-option v-for="item in packOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
