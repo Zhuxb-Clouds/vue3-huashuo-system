@@ -56,7 +56,7 @@ const form: cardDetal = reactive({
     back: "",
 })
 watch(() => props.cardId, (val) => {
-    console.log("检测到cardId变化",val)
+    // console.log("检测到cardId变化",val)
     if(val){
         const data = store.getCardById(val)
         form.type = data.type;
@@ -64,6 +64,7 @@ watch(() => props.cardId, (val) => {
         form.front = data.front;
         form.back = data.back;
     }
+    cardId.value = val;
     
 })
 
@@ -85,12 +86,10 @@ const handleClose = () => {//新增弹窗内点击取消
 }
 const handleConfirm = () => {//新增弹窗内点击确定
     //调用piniaAction：store.addCard()函数
-    store.addCard({
-        type: form.type,
-        pack: form.pack,
-        front: form.front,
-        back: form.back,
-    });
+    if(!cardId.value){store.addCard(form);
+    }else{
+        store.editCard(cardId.value,form)
+    }
     // 传入参数：form，返回空值
     emit("closePopup", false)
     IsShow.value = false;

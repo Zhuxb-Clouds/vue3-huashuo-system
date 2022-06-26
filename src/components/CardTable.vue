@@ -13,11 +13,11 @@
                 <el-main>
                     <el-table :data="cardTable" stripe style="width: 100% ;height: 200%" table-layout="auto">
                         <el-table-column type="selection" />
-                        <el-table-column prop="id" label="卡牌编号" />
-                        <el-table-column prop="front" label="卡牌名称" />
-                        <el-table-column prop="back" label="卡牌描述" />
-                        <el-table-column prop="type" label="卡牌类型" />
-                        <el-table-column prop="pack" label="从属包" />
+                        <el-table-column prop="id" label="卡牌编号"  width="180"/>
+                        <el-table-column prop="front" label="卡牌名称" width="300"/>
+                        <el-table-column prop="back" label="卡牌描述" width="500"/>
+                        <el-table-column prop="type" label="卡牌类型" width="180"/>
+                        <el-table-column prop="pack" label="从属包" width="180"/>
                         <el-table-column label="操作">
                             <template #default="{ row }">
                                 <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>

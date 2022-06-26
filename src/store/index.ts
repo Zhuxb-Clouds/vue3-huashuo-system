@@ -86,7 +86,7 @@ export const mainStore = defineStore('main', {
   getters: {},
   actions: {
     getCardTable(pack: string, type: string) {
-      if (type == '' && pack == '') { this.cardTable = this.cardTableData }
+      if (type == "" && pack == "") { this.cardTable = this.cardTableData }
       else {
         this.cardTable = this.cardTableData.filter(item =>
           (item.type == type || type == '') && (item.pack == pack || pack == '')
@@ -98,8 +98,12 @@ export const mainStore = defineStore('main', {
       this.cardTableData.push({ id: this.cardTableData.length + 1 ,...form})
       this.getCardTable("","")
     },
-    getCardById(id:number){
-      return this.cardTableData.filter(o=>o.id==id)[0]
+    getCardById(id:number){return this.cardTableData.filter(o=>o.id==id)[0]},
+    editCard(id:number,form:cardDetal){
+      this.cardTableData.forEach((item,index,arr)=>{if(item.id==id){arr[index]={id:id,...form}}})
+      this.getCardTable("","")
+      console.log('this.cardTableData',this.cardTableData)
+      console.log('this.cardTable',this.cardTable)
     }
   }
 })
