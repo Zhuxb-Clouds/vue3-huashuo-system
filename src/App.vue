@@ -1,10 +1,13 @@
 <template>
   <router-view></router-view>
+  <!-- <FooterFav/> -->
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-const router = useRouter()
+// import { useRouter } from 'vue-router';
+// import FooterFav from "./components/FooterView.vue";
+
+// const router = useRouter()
 
 </script>
 
@@ -14,6 +17,5 @@ const router = useRouter()
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-
 }
 </style>

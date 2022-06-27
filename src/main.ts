@@ -13,6 +13,7 @@ const app = createApp(App);
 app.use(ElementPlus);
 // eslint-disable-next-line
 app.use(pinia as any);
+// eslint-disable-next-line
 app.use(router as any);
 
 app.mount('#app');

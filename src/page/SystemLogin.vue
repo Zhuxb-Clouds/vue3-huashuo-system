@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter,useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 const router = useRouter()
-const route = useRoute()
+// const route = useRoute()
 
 
 const code = {
@@ -49,7 +49,7 @@ function check() {
     background: url("../assets/cover.webp") no-repeat top left/ 60%,
         url("../assets/Logo.webp") no-repeat 120% 30% / 45%;
     background-attachment: fixed;
-    background-color: rgb(240, 240, 240);
+    /* background-color: rgb(240, 240, 240); */
     font-family: "Noto Serif SC", serif;
 }
 
