@@ -11,7 +11,7 @@
                     </el-col>
                 </el-header>
                 <el-main>
-                    <el-table :data="cardTable" stripe style="width: 100% ;height: 200%" table-layout="auto"
+                    <el-table :data="cardTableData" stripe style="width: 100% ;height: 200%" table-layout="auto"
                         @selection-change="handleSelectionChange" ref="multipleTableRef">
                         <el-table-column type="selection" />
                         <el-table-column prop="id" label="卡牌编号" width="180" />
@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 // import CardFilte from "./CardFilte.vue";
-import { ref, h } from 'vue'
+import { ref, h, onBeforeMount } from 'vue'
 import { ElTable, ElMessage, ElMessageBox } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import CardPopup from "./CardPopup.vue";
@@ -46,7 +46,7 @@ import { cardDetal } from "../type/index.js";
 const cardId = ref(0)
 
 const store = mainStore();
-const { cardTable } = storeToRefs(store);
+const { cardTableData } = storeToRefs(store);
 const dialogVisible = ref(false);
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<cardDetal[]>([])
@@ -58,9 +58,12 @@ const handleSelectionChange = (val: cardDetal[]) => {
     // console.log('val', val)
     multipleSelection.value = val
 };
-
+//在挂载前调用一次getCard
+onBeforeMount(
+    store.getCard() as any
+)
 // 新增handel函数
-const handleAdd = function(){
+const handleAdd = function () {
     cardId.value = 0
     openPopup()
 }
@@ -95,7 +98,7 @@ const handleDelet = function () {
         }
     )
         .then(() => {
-            let idArr:(number | undefined)[] = multipleSelection.value.map(item=>item.id)
+            let idArr: (number | undefined)[] = multipleSelection.value.map(item => item.id)
             store.deleteCard(idArr)
             ElMessage({
                 type: 'success',

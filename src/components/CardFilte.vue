@@ -16,16 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref ,onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { mainStore } from "../store/";
 import { storeToRefs } from 'pinia';
 const type = ref('');
 const pack = ref('');
 const store = mainStore();
-const { typeOptions,packOptions } = storeToRefs(store);
+const { typeOptions, packOptions } = storeToRefs(store);
 //调用piniaActions搜索
 function search() {
-  store.getCardTable(pack.value,type.value)
+  // store.getCardTable(pack.value,type.value)
 }
 onMounted(() => {
   search()

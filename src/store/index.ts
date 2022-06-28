@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
 import { cardDetal } from "../type/index.js";
+import cardApi from "../api/card";
+
 export const mainStore = defineStore('main', {
   state: () => {
     return {
-      cardTable: [{}],
       typeOptions: [{
         label: "江湖牌",
         value: "江湖牌"
@@ -33,80 +34,47 @@ export const mainStore = defineStore('main', {
         label: "儿女情长",
         value: "儿女情长"
       }],
-      cardTableData: [{
-        id: 1,
-        type: "江湖牌",
-        front: "奇门兵器",
-        back: "",
-        pack: "标准包"
-
-      }, {
-        id: 2,
-        type: "江湖牌",
-        front: "奇门兵器",
-        back: "",
-        pack: "标准包"
-
-      }, {
-        id: 3,
-        type: "江湖牌",
-        front: "奇门兵器",
-        back: "",
-        pack: "标准包"
-
-      }, {
-        id: 4,
-        type: "江湖牌",
-        front: "奇门兵器",
-        back: "",
-        pack: "标准包"
-
-      }, {
-        id: 5,
-        type: "江湖牌",
-        front: "奇门兵器",
-        back: "",
-        pack: "标准包"
-
-      }, {
-        id: 6,
-        type: "江湖牌",
-        front: "奇门兵器",
-        back: "",
-        pack: "标准包"
-
-      }]
+      cardTableData: [{}]
     }
   },
   getters: {},
   actions: {
-    getCardTable(pack: string, type: string) {
-      if (type == "" && pack == "") { this.cardTable = this.cardTableData }
-      else {
-        this.cardTable = this.cardTableData.filter(item =>
-          (item.type == type || type == '') && (item.pack == pack || pack == '')
-        )
-      }
-    },
-    addCard(form:cardDetal) {
+    // getCardTable(pack: string, type: string) {
+    //   if (type == "" && pack == "") { this.cardTable = this.cardTableData }
+    //   else {
+    //     this.cardTable = this.cardTableData.filter(item =>
+    //       (item.type == type || type == '') && (item.pack == pack || pack == '')
+    //     )
+    //   }
+    // },
+    addCard(form: cardDetal) {
       // 传入json格式的form，包含type, pack, front, back,四个元素，改变cardTableData并调用getCardTable
-      this.cardTableData.push({ id: this.cardTableData.length + 1 ,...form})
-      this.getCardTable("","")
+      this.cardTableData.push({ id: this.cardTableData.length + 1, ...form })
+      // this.getCardTable("", "")
     },
-    getCardById(id:number){return this.cardTableData.filter(o=>o.id==id)[0]},
-    editCard(id:number,form:cardDetal){
-      this.cardTableData.forEach((item,index,arr)=>{if(item.id==id){arr[index]={id:id,...form}}})
-      this.getCardTable("","")
+    // getCardById(id: number) { return this.cardTableData.filter(o => o.id == id)[0] },
+    editCard(id: number, form: cardDetal) {
+      // do noting
+      // this.cardTableData.forEach((item, index, arr) => { if (item.id == id) { arr[index] = { id: id, ...form } } })
+      // this.getCardTable("", "")
       // console.log('this.cardTableData',this.cardTableData)
       // console.log('this.cardTable',this.cardTable)
     },
-    deleteCardById(id:number){
-      this.cardTableData.forEach((o,i,a)=>{if(o.id==id){a.splice(i,1)}})
+    deleteCardById(id: number) {
+      //do noting
+      // this.cardTableData.forEach((o, i, a) => { if (o.id == id) { a.splice(i, 1) } })
     },
-    deleteCard(idArr:(number | undefined)[]){
-      for (let i = 0; i < idArr.length; i++) {
-        this.deleteCardById(idArr[i]??0)
-      }
+    deleteCard(idArr: (number | undefined)[]) {
+      //do noting
+      // for (let i = 0; i < idArr.length; i++) {
+      //   this.deleteCardById(idArr[i] ?? 0)
+      // }
+    },
+    async getCard() {
+      const query = { id: 1 }
+      console.log('this.cardTableDataBefore', this.cardTableData)
+      this.cardTableData = await cardApi.getCard(query)
+      console.log('this.cardTableDataAfter', this.cardTableData)
     }
   }
 })
