@@ -60,7 +60,7 @@ const handleSelectionChange = (val: cardDetal[]) => {
 };
 //在挂载前调用一次getCard
 onBeforeMount(
-    store.getCard() as any
+    store.getCard({}) as any
 )
 // 新增handel函数
 const handleAdd = function () {

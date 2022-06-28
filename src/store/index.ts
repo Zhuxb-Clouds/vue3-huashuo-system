@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { cardDetal } from "../type/index.js";
 import cardApi from "../api/card";
+import { queryType } from "../type/index";
 
 export const mainStore = defineStore('main', {
   state: () => {
@@ -70,11 +71,6 @@ export const mainStore = defineStore('main', {
       //   this.deleteCardById(idArr[i] ?? 0)
       // }
     },
-    async getCard() {
-      const query = { id: 1 }
-      console.log('this.cardTableDataBefore', this.cardTableData)
-      this.cardTableData = await cardApi.getCard(query)
-      console.log('this.cardTableDataAfter', this.cardTableData)
-    }
+    async getCard(query: queryType) { this.cardTableData = await cardApi.getCard(query) }
   }
 })
