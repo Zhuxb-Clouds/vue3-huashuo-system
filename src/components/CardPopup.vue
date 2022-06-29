@@ -83,7 +83,7 @@ const formRules = reactive<FormRules>({
 // 对弹窗开启的控制
 const emit = defineEmits(['closePopup'])
 const handleClose = () => {//新增弹窗内点击取消
-    emit("closePopup", false)
+    emit("closePopup", false);
     IsShow.value = false;
 }
 const handleConfirm = () => {//新增弹窗内点击确定

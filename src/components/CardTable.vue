@@ -52,7 +52,10 @@ const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<cardType[]>([])
 
 const openPopup = () => dialogVisible.value = true;
-const closePopup = () => dialogVisible.value = false;
+const closePopup = () => {
+    dialogVisible.value = false;
+    cardId.value = 0;
+}
 const handleSelectionChange = (val: cardType[]) => {
     // console.log('multipleSelection.value', multipleSelection.value)
     // console.log('val', val)
