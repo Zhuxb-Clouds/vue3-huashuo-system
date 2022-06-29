@@ -4,7 +4,7 @@
             <div class="boxTitle">请登陆</div>
             <div class="loginForm">
                 <input type="text" placeholder="请输入账号名" v-model="account" />
-                <input type="password" placeholder="请输入密码" v-model="password" />
+                <input type="password" placeholder="请输入密码" v-model="password" v-on:keypress.enter="check()" />
                 <button id="LoginBtn" @click="check()">登录</button>
             </div>
         </div>
@@ -12,9 +12,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, h } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+
 const router = useRouter()
+
 // const route = useRoute()
 
 
@@ -29,7 +32,11 @@ function check() {
         console.log("通过验证", router);
         router.push({ name: 'cardtable' })
     } else {
-        console.log("验证失败");
+        ElMessage.error({
+            message: h('p', null, [
+                h('span', { style: 'color: black;  font-family: "Noto Serif SC", serif;' }, '登录失败'),
+            ]),
+        })
     }
 }
 

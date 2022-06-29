@@ -27,8 +27,8 @@ const { typeOptions, packOptions } = storeToRefs(store);
 //调用piniaActions搜索
 function search() {
   store.getCard({ pack: pack.value, type: type.value })
-  console.log('type.value', type.value)
-  console.log('store.typeOptions', store.typeOptions)
+  // console.log('type.value', type.value)
+  // console.log('store.typeOptions', store.typeOptions)
 }
 
 onMounted(() => {
