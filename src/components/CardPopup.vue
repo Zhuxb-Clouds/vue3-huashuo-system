@@ -1,5 +1,5 @@
 <template>
-    <el-dialog v-model="IsShow" title="新增卡牌" width="20%" :before-close="handleClose">
+    <el-dialog v-model="IsShow" title="新增卡牌" width="25%" :before-close="handleClose">
         <el-form label-position="right" label-width="25%" :rules="formRules" :model="form" ref="ruleFormRef">
             <el-form-item label="卡牌类型" prop="type">
                 <el-select v-model="form.type" placeholder="请选择卡牌类型">
@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { reactive, ref, defineProps, defineEmits, watch } from 'vue'
 import { mainStore } from "../store/index";
-import { cardDetal } from "../type/index.js";
+import { cardType } from "../type/index.js";
 import { storeToRefs } from 'pinia';
 import type { FormInstance, FormRules } from 'element-plus';
 
@@ -44,30 +44,30 @@ const cardId = ref(props.cardId)
 
 watch(() => props.IsShow, (val) => {
     IsShow.value = val
-
 })
 
 
 // 此处干脆改成pinia集中管理得了
-const form: cardDetal = reactive({
+const form: cardType = reactive({
     type: "",
     pack: "",
     front: "",
     back: "",
 })
-watch(() => props.cardId, (val) => {
+watch(() => props.cardId, async (val) => {
     // console.log("检测到cardId变化",val)
-    if(val!==0){
-        const data = store.getCardById(val)
+    if (val !== 0) {
+        const data = await store.getCardById(val)
+        console.log('data', data)
         form.type = data.type;
         form.pack = data.pack;
         form.front = data.front;
         form.back = data.back;
-    }else {
+    } else {
         ruleFormRef.value?.resetFields();
     }
     cardId.value = val;
-    
+
 })
 
 
@@ -88,12 +88,15 @@ const handleClose = () => {//新增弹窗内点击取消
 }
 const handleConfirm = () => {//新增弹窗内点击确定
     //调用piniaAction：store.addCard()函数
-    if(!cardId.value){store.addCard(form);
-    }else{
-        store.editCard(cardId.value,form)
+    if (!cardId.value) {
+        console.log('form', form)
+        store.addCard(form);
+    } else {
+        store.editCard({ id: cardId.value, ...form })
     }
     // 传入参数：form，返回空值
     emit("closePopup", false)
+    ruleFormRef.value?.resetFields();
     IsShow.value = false;
 }
 

@@ -19,8 +19,8 @@ const router = useRouter()
 
 
 const code = {
-    account: "admin",
-    password: "123456"
+    account: "决明子",
+    password: "QQ1239428853"
 }
 let account = ref("")
 let password = ref("")

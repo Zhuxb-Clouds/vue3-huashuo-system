@@ -19,16 +19,22 @@
 import { ref, onMounted } from 'vue';
 import { mainStore } from "../store/";
 import { storeToRefs } from 'pinia';
-const type = ref('');
-const pack = ref('');
+
+const type = ref();
+const pack = ref();
 const store = mainStore();
 const { typeOptions, packOptions } = storeToRefs(store);
 //调用piniaActions搜索
 function search() {
   store.getCard({ pack: pack.value, type: type.value })
+  console.log('type.value', type.value)
+  console.log('store.typeOptions', store.typeOptions)
 }
+
 onMounted(() => {
+  store.getOption()
   search()
+
 })
 
 

@@ -14,11 +14,11 @@
                     <el-table :data="cardTableData" stripe style="width: 100% ;height: 200%" table-layout="auto"
                         @selection-change="handleSelectionChange" ref="multipleTableRef">
                         <el-table-column type="selection" />
-                        <el-table-column prop="id" label="卡牌编号" width="180" />
-                        <el-table-column prop="front" label="卡牌名称" width="300" />
-                        <el-table-column prop="back" label="卡牌描述" width="500" />
-                        <el-table-column prop="type" label="卡牌类型" width="180" />
-                        <el-table-column prop="pack" label="从属包" width="180" />
+                        <el-table-column prop="id" label="卡牌编号" min-width="90" />
+                        <el-table-column prop="front" label="卡牌名称" min-width="150" />
+                        <el-table-column prop="back" label="卡牌描述" min-width="250" />
+                        <el-table-column prop="type" label="卡牌类型" min-width="90" />
+                        <el-table-column prop="pack" label="从属包" min-width="90" />
                         <el-table-column label="操作">
                             <template #default="{ row }">
                                 <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>
@@ -39,7 +39,7 @@ import { ElTable, ElMessage, ElMessageBox } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import CardPopup from "./CardPopup.vue";
 import { mainStore } from "../store/index";
-import { cardDetal } from "../type/index.js";
+import { cardType } from "../type/index.js";
 
 
 
@@ -49,11 +49,11 @@ const store = mainStore();
 const { cardTableData } = storeToRefs(store);
 const dialogVisible = ref(false);
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
-const multipleSelection = ref<cardDetal[]>([])
+const multipleSelection = ref<cardType[]>([])
 
 const openPopup = () => dialogVisible.value = true;
 const closePopup = () => dialogVisible.value = false;
-const handleSelectionChange = (val: cardDetal[]) => {
+const handleSelectionChange = (val: cardType[]) => {
     // console.log('multipleSelection.value', multipleSelection.value)
     // console.log('val', val)
     multipleSelection.value = val
