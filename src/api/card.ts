@@ -18,6 +18,21 @@ export default {
                 id: query?.id,
                 type: query?.type,
                 pack: query?.pack,
+                pageSize: query?.pageSize,
+                page: query?.page,
+            },
+        }) as any
+    },
+    getCardTotal(query?: queryType): Promise<cardType[]> {
+        return req({
+            url: `api/cardtotal`,
+            method: 'get',
+            params: {
+                id: query?.id,
+                type: query?.type,
+                pack: query?.pack,
+                pageSize: query?.pageSize,
+                page: query?.page,
             },
         }) as any
     },

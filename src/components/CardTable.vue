@@ -9,33 +9,38 @@
                         <el-button id="addBtn" @click="handleAdd">新增</el-button>
                         <el-button type="danger" id="addBtn" @click="handleDelet">删除</el-button>
                     </el-col>
+
                 </el-header>
                 <el-main>
                     <el-table :data="cardTableData" stripe style="width: 100% ;height: 200%" table-layout="auto"
                         @selection-change="handleSelectionChange" ref="multipleTableRef">
                         <el-table-column type="selection" />
                         <el-table-column prop="id" label="卡牌编号" min-width="90" />
-                        <el-table-column prop="front" label="卡牌名称" min-width="150" />
-                        <el-table-column prop="back" label="卡牌描述" min-width="200" :show-overflow-tooltip="true" />
-                        <el-table-column prop="type" label="卡牌类型" min-width="90" />
-                        <el-table-column prop="pack" label="从属包" min-width="90" />
-                        <el-table-column prop="author" label="作者" min-width="90" />
+                        <el-table-column prop="front" label="卡牌名称" min-width="180" />
+                        <el-table-column prop="back" label="卡牌描述" width="500" :show-overflow-tooltip="true" />
+                        <el-table-column prop="type" label="卡牌类型" min-width="150" />
+                        <el-table-column prop="pack" label="从属包" min-width="150" />
+                        <el-table-column prop="author" label="作者" min-width="150" />
                         <el-table-column label="操作">
                             <template #default="{ row }">
                                 <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>
                             </template>
-
                         </el-table-column>
+
                     </el-table>
+                    <el-pagination :page-size="pagination.pageSize" :pager-count="11" layout="prev, pager, next"
+                        :current-page="pagination.page" :total="cardTableDataTotal"
+                        @current-change="handleCurrentChange" :hide-on-single-page="true" style="margin-top: 1%;" />
                 </el-main>
             </el-container>
         </div>
+
     </div>
 </template>
 
 <script setup lang="ts">
 // import CardFilte from "./CardFilte.vue";
-import { ref, h, onBeforeMount } from 'vue'
+import { ref, h, onBeforeMount, reactive } from 'vue'
 import { ElTable, ElMessage, ElMessageBox } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import CardPopup from "./CardPopup.vue";
@@ -47,7 +52,7 @@ import { cardType } from "../type/index.js";
 const cardId = ref(0)
 
 const store = mainStore();
-const { cardTableData } = storeToRefs(store);
+const { cardTableData, cardTableDataTotal } = storeToRefs(store);
 const dialogVisible = ref(false);
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<cardType[]>([])
@@ -57,6 +62,18 @@ const closePopup = () => {
     dialogVisible.value = false;
     cardId.value = 0;
 }
+
+const pagination = reactive({
+    page: 1,
+    pageSize: 15
+})
+
+const handleCurrentChange = (val: number) => {
+    pagination.page = val;
+    store.getCard({ page: pagination.page, pageSize: pagination.pageSize });
+}
+
+
 const handleSelectionChange = (val: cardType[]) => {
     // console.log('multipleSelection.value', multipleSelection.value)
     // console.log('val', val)
@@ -64,7 +81,7 @@ const handleSelectionChange = (val: cardType[]) => {
 };
 //在挂载前调用一次getCard
 onBeforeMount(
-    store.getCard({}) as any
+    store.getCard({ page: pagination.page, pageSize: pagination.pageSize }) as any
 )
 // 新增handel函数
 const handleAdd = function () {
@@ -126,12 +143,12 @@ const handleDelet = function () {
 }
 
 #tableBox {
-    height: 90vh;
+    height: 100%;
     background-color: white;
     margin: 1%;
     margin-right: 1%;
     padding: 2%;
-    padding-left: 3%;
+    /* padding-left: 3%; */
     border-radius: 10px;
     box-shadow: 5px 5px 10px 1px rgba(32, 32, 32, 0.11);
 }

@@ -89,9 +89,9 @@ const handleClose = () => {//新增弹窗内点击取消
 const handleConfirm = () => {//新增弹窗内点击确定
     //调用piniaAction：store.addCard()函数
     if (!cardId.value) {
-        console.log('form', form)
         store.addCard(form);
     } else {
+        console.log('form', form)
         store.editCard({ id: cardId.value, ...form })
     }
     // 传入参数：form，返回空值

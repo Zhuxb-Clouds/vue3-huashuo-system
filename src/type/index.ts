@@ -10,6 +10,8 @@ export interface queryType {
     type?: number;
     pack?: number;
     id?: number;
+    pageSize?: number;
+    page?: number;
 }
 
 export interface cardType {

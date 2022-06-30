@@ -7,7 +7,9 @@ export const mainStore = defineStore('main', {
     return {
       typeOptions: <optionType[]>[],
       packOptions: <optionType[]>[],
-      cardTableData: <cardType[]>[]
+      cardTableData: <cardType[]>[],
+      searchQuery: <queryType>{},
+      cardTableDataTotal: 309,
     }
   },
   getters: {},
@@ -23,6 +25,7 @@ export const mainStore = defineStore('main', {
     },
     // getCardById(id: number) { return this.cardTableData.filter(o => o.id == id)[0] },
     async editCard(form: cardType) {
+      // console.log('form', form)
       await Api.editCard(form)
       this.getCard()
 
@@ -42,6 +45,11 @@ export const mainStore = defineStore('main', {
     async deleteCardById(id: number) {
       return await Api.delCard(id)
     },
-    async getCard(query?: queryType) { this.cardTableData = await Api.getCard(query) }
+    async getCard(query?: queryType) {
+      const res = await Api.getCard({ ...query, ...this.searchQuery }) as any;
+      this.cardTableData = res.rows;
+      this.cardTableDataTotal = res.count;
+    },
+    search(type: number, pack: number) { this.searchQuery = { type: type, pack: pack } },
   }
 })

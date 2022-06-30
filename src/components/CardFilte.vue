@@ -2,13 +2,13 @@
   <div id="filterBox">
     <div class="selectBox">
       <span class="descript">卡牌类型</span>
-      <el-select v-model="type" class="m-2" placeholder="请选择卡牌类型" size="large" @change="search">
+      <el-select v-model="type" class="m-2" placeholder="请选择卡牌类型" size="large" @change="search" clearable>
         <el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
     <div class="selectBox">
       <span class="descript">从属包</span>
-      <el-select v-model="pack" class="m-2" placeholder="请选择包从属" size="large" @change="search">
+      <el-select v-model="pack" class="m-2" placeholder="请选择包从属" size="large" clearable @change="search">
         <el-option v-for="item in packOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
@@ -26,9 +26,8 @@ const store = mainStore();
 const { typeOptions, packOptions } = storeToRefs(store);
 //调用piniaActions搜索
 function search() {
-  store.getCard({ pack: pack.value, type: type.value })
-  // console.log('type.value', type.value)
-  // console.log('store.typeOptions', store.typeOptions)
+  store.search(type.value, pack.value);
+  store.getCard()
 }
 
 onMounted(() => {
