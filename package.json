@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "vbuild": "vite build",
-    "preview": "vite preview --port 8080",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
@@ -14,7 +12,6 @@
     "core-js": "^3.8.3",
     "element-plus": "^2.2.4",
     "pinia": "^2.0.14",
-    "vite": "^2.9.13",
     "vue": "^3.2.13",
     "vue-router": "^4.0.16"
   },

@@ -30,7 +30,7 @@ let password = ref("")
 function check() {
     if (account.value == code.account && password.value == code.password) {
         console.log("通过验证", router);
-        router.push({ name: 'cardtable' })
+        router.push({ name: 'cardtable' });
     } else {
         ElMessage.error({
             message: h('p', null, [
@@ -38,6 +38,9 @@ function check() {
             ]),
         })
     }
+}
+if (localStorage.getItem('token') != null) {
+    router.push({ name: 'cardtable' });
 }
 
 </script >
