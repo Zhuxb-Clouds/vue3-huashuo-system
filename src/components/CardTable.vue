@@ -16,9 +16,10 @@
                         <el-table-column type="selection" />
                         <el-table-column prop="id" label="卡牌编号" min-width="90" />
                         <el-table-column prop="front" label="卡牌名称" min-width="150" />
-                        <el-table-column prop="back" label="卡牌描述" min-width="250" />
+                        <el-table-column prop="back" label="卡牌描述" min-width="200" :show-overflow-tooltip="true" />
                         <el-table-column prop="type" label="卡牌类型" min-width="90" />
                         <el-table-column prop="pack" label="从属包" min-width="90" />
+                        <el-table-column prop="author" label="作者" min-width="90" />
                         <el-table-column label="操作">
                             <template #default="{ row }">
                                 <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>

@@ -18,6 +18,7 @@ export interface cardType {
     front: string;
     back?: string;
     id?: number;
+    author?: string;
 }
 
 export interface optionType {
