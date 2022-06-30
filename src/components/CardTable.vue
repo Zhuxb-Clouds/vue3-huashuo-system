@@ -12,25 +12,27 @@
 
                 </el-header>
                 <el-main>
-                    <el-table :data="cardTableData" stripe style="width: 100% ;height: 200%" table-layout="auto"
+                    <el-table :data="cardTableData" stripe style="width: 100% ;height: 120%" table-layout="fixed"
                         @selection-change="handleSelectionChange" ref="multipleTableRef">
                         <el-table-column type="selection" />
-                        <el-table-column prop="id" label="卡牌编号" min-width="90" />
-                        <el-table-column prop="front" label="卡牌名称" min-width="180" />
-                        <el-table-column prop="back" label="卡牌描述" width="500" :show-overflow-tooltip="true" />
-                        <el-table-column prop="type" label="卡牌类型" min-width="150" />
-                        <el-table-column prop="pack" label="从属包" min-width="150" />
-                        <el-table-column prop="author" label="作者" min-width="150" />
-                        <el-table-column label="操作">
+                        <el-table-column prop="id" label="卡牌编号" min-width="50" align="center" />
+                        <el-table-column prop="front" label="卡牌名称" min-width="200"
+                            :align="showBack ? 'left' : 'center'" />
+                        <el-table-column prop="back" label="卡牌描述" width="700" :show-overflow-tooltip="1" v-if="showBack"
+                            align="center" />
+                        <el-table-column prop="type" label="卡牌类型" min-width="150" align="center" />
+                        <el-table-column prop="pack" label="从属包" min-width="150" align="center" />
+                        <el-table-column prop="author" label="作者" min-width="150" align="center" v-if="showAuthor" />
+                        <el-table-column label="操作" align="center" min-width="50">
                             <template #default="{ row }">
                                 <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>
                             </template>
                         </el-table-column>
 
                     </el-table>
-                    <el-pagination :page-size="pagination.pageSize" :pager-count="11" layout="prev, pager, next"
-                        :current-page="pagination.page" :total="cardTableDataTotal"
-                        @current-change="handleCurrentChange" :hide-on-single-page="true" style="margin-top: 1%;" />
+                    <el-pagination :page-size="pageSize" :pager-count="11" layout="prev, pager, next"
+                        :current-page="page" :total="cardTableDataTotal" @current-change="handleCurrentChange"
+                        :hide-on-single-page="true" style="margin-top: 1%;" />
                 </el-main>
             </el-container>
         </div>
@@ -40,7 +42,7 @@
 
 <script setup lang="ts">
 // import CardFilte from "./CardFilte.vue";
-import { ref, h, onBeforeMount, reactive } from 'vue'
+import { ref, h, onBeforeMount, reactive, watch } from 'vue'
 import { ElTable, ElMessage, ElMessageBox } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import CardPopup from "./CardPopup.vue";
@@ -52,7 +54,7 @@ import { cardType } from "../type/index.js";
 const cardId = ref(0)
 
 const store = mainStore();
-const { cardTableData, cardTableDataTotal } = storeToRefs(store);
+const { cardTableData, cardTableDataTotal, page, pageSize } = storeToRefs(store);
 const dialogVisible = ref(false);
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<cardType[]>([])
@@ -63,14 +65,11 @@ const closePopup = () => {
     cardId.value = 0;
 }
 
-const pagination = reactive({
-    page: 1,
-    pageSize: 15
-})
 
 const handleCurrentChange = (val: number) => {
-    pagination.page = val;
-    store.getCard({ page: pagination.page, pageSize: pagination.pageSize });
+    store.pageChange(val);
+    page.value = val;
+    store.getCard({ page: page.value, pageSize: pageSize.value });
 }
 
 
@@ -81,7 +80,7 @@ const handleSelectionChange = (val: cardType[]) => {
 };
 //在挂载前调用一次getCard
 onBeforeMount(
-    store.getCard({ page: pagination.page, pageSize: pagination.pageSize }) as any
+    store.getCard({ page: page.value, pageSize: pageSize.value }) as any
 )
 // 新增handel函数
 const handleAdd = function () {
@@ -135,6 +134,18 @@ const handleDelet = function () {
     // 如果选中，弹窗确认要删除
     // store.deleteCard
 }
+const showBack = ref(true)
+const showAuthor = ref(true)
+watch(cardTableData, (val: cardType[]) => {
+    showBack.value = val.filter(i => {
+        // console.log('i', i.back)
+        if (i.back !== null && i.back !== "") { return true }
+    }).length > 0;
+    showAuthor.value = val.filter(i => {
+        if (i.author !== null && i.author !== "") { return true }
+    }).length > 0;
+
+})
 </script>
 
 <style scoped>

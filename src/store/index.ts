@@ -10,6 +10,8 @@ export const mainStore = defineStore('main', {
       cardTableData: <cardType[]>[],
       searchQuery: <queryType>{},
       cardTableDataTotal: 309,
+      pageSize: 15,
+      page: 1,
     }
   },
   getters: {},
@@ -46,10 +48,11 @@ export const mainStore = defineStore('main', {
       return await Api.delCard(id)
     },
     async getCard(query?: queryType) {
-      const res = await Api.getCard({ ...query, ...this.searchQuery }) as any;
+      const res = await Api.getCard({ ...query, ...this.searchQuery, page: this.page }) as any;
       this.cardTableData = res.rows;
       this.cardTableDataTotal = res.count;
     },
     search(type: number, pack: number) { this.searchQuery = { type: type, pack: pack } },
+    pageChange(page: number) { this.page = page },
   }
 })

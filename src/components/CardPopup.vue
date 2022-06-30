@@ -35,7 +35,7 @@ import { storeToRefs } from 'pinia';
 import type { FormInstance, FormRules } from 'element-plus';
 
 const store = mainStore();
-const { typeOptions, packOptions } = storeToRefs(store);
+const { typeOptions, packOptions, page } = storeToRefs(store);
 // 接受prop并赋值
 const props = defineProps(['IsShow', "cardId"]);
 const IsShow = ref(props.IsShow)
@@ -96,6 +96,7 @@ const handleConfirm = () => {//新增弹窗内点击确定
     }
     // 传入参数：form，返回空值
     emit("closePopup", false)
+    page.value = 1;
     ruleFormRef.value?.resetFields();
     IsShow.value = false;
 }
