@@ -14,7 +14,7 @@
     </div>
     <div class="selectBox">
       <span class="descript">关键词</span>
-      <el-input v-model="keyword" clearable placeholder="仅搜索卡牌名称与卡牌描述" @change="search" size="large" />
+      <el-input v-model="keyword" clearable placeholder="仅搜索卡牌名称与卡牌描述" @change="search" />
     </div>
   </div>
 </template>
@@ -66,6 +66,8 @@ onMounted(() => {
 }
 
 .descript {
+  text-align: center;
+  white-space: nowrap;
   display: block;
   margin-right: 5%;
 }
