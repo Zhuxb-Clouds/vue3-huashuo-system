@@ -14,7 +14,7 @@
     </div>
     <div class="selectBox">
       <span class="descript">关键词</span>
-      <el-input v-model="keyword" clearable placeholder="仅搜索卡牌名称与卡牌描述" @change="search" />
+      <el-input v-model="keyword" clearable placeholder="仅搜索卡牌名称与卡牌描述" @input="search" />
     </div>
   </div>
 </template>
