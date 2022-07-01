@@ -20,6 +20,7 @@ export default {
                 pack: query?.pack,
                 pageSize: query?.pageSize,
                 page: query?.page,
+                keyword: query?.keyword,
             },
         }) as any
     },

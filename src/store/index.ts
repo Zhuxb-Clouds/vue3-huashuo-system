@@ -52,7 +52,7 @@ export const mainStore = defineStore('main', {
       this.cardTableData = res.rows;
       this.cardTableDataTotal = res.count;
     },
-    search(type: number, pack: number) { this.searchQuery = { type: type, pack: pack } },
+    search(type: number, pack: number, keyword: string) { this.searchQuery = { type: type, pack: pack, keyword: keyword } },
     pageChange(page: number) { this.page = page },
   }
 })

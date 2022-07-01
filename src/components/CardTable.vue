@@ -13,7 +13,7 @@
                 </el-header>
                 <el-main>
                     <el-table :data="cardTableData" stripe style="width: 100% ;height: 120%" table-layout="fixed"
-                        @selection-change="handleSelectionChange" ref="multipleTableRef">
+                        max-height="800" @selection-change="handleSelectionChange" ref="multipleTableRef">
                         <el-table-column type="selection" />
                         <el-table-column prop="id" label="卡牌编号" min-width="50" align="center" />
                         <el-table-column prop="front" label="卡牌名称" min-width="200"

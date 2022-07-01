@@ -12,6 +12,7 @@ export interface queryType {
     id?: number;
     pageSize?: number;
     page?: number;
+    keyword?: string;
 }
 
 export interface cardType {

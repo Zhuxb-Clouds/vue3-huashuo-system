@@ -12,6 +12,10 @@
         <el-option v-for="item in packOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
+    <div class="selectBox">
+      <span class="descript">关键词</span>
+      <el-input v-model="keyword" clearable placeholder="仅搜索卡牌名称与卡牌描述" @change="search" size="large" />
+    </div>
   </div>
 </template>
 
@@ -22,11 +26,12 @@ import { storeToRefs } from 'pinia';
 
 const type = ref();
 const pack = ref();
+const keyword = ref();
 const store = mainStore();
 const { typeOptions, packOptions } = storeToRefs(store);
 //调用piniaActions搜索
 function search() {
-  store.search(type.value, pack.value);
+  store.search(type.value, pack.value, keyword.value);
   store.getCard()
 }
 
