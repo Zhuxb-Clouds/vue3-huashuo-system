@@ -4,8 +4,8 @@
             <div class="boxTitle">请登陆</div>
             <div class="loginForm">
                 <input type="text" placeholder="请输入账号名" v-model="account" />
-                <input type="password" placeholder="请输入密码" v-model="password" v-on:keypress.enter="check()" />
-                <button id="LoginBtn" @click="check()">登录</button>
+                <input type="password" placeholder="请输入密码" v-model="password" v-on:keypress.enter="checkLogin" />
+                <button id="LoginBtn" @click="checkLogin">登录</button>
             </div>
         </div>
     </div>
@@ -15,21 +15,19 @@
 import { ref, h } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import api from '../api/login'
 
 const router = useRouter()
 
 // const route = useRoute()
 
-
-const code = {
-    account: "决明子",
-    password: "QQ1239428853"
-}
 let account = ref("")
 let password = ref("")
-function check() {
-    if (account.value == code.account && password.value == code.password) {
-        console.log("通过验证", router);
+async function checkLogin() {
+    const token = await api.Login({ username: account.value, password: password.value })
+    if (token) {
+        // console.log("通过验证", router);
+        localStorage.setItem("token", token)
         router.push({ name: 'cardtable' });
     } else {
         ElMessage.error({

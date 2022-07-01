@@ -1,4 +1,9 @@
 import axios from 'axios'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+
+
 const req = axios.create({
     baseURL: process.env.VUE_APP_BASE_URL, // url = base url + request url
     // baseURL: process.env.VUE_APP_BASE_URL_LOCAL, // url = base url + request url
@@ -24,4 +29,17 @@ req.interceptors.response.use(
     }
 )
 
+req.interceptors.request.use(
+    function (config) {
+        if (localStorage.getItem("token")) {
+            config.headers!['Authorization'] = `${localStorage.getItem("token")}`
+        }
+        // }
+        return config
+    },
+    function (error) {
+        router.push("/login");
+        return Promise.reject(error);
+    }
+)
 export default req
