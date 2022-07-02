@@ -48,28 +48,5 @@ export default {
             url: `api/type`,
             method: 'get',
         }) as any
-    },
-    addCard(card: cardType) {
-        return req({
-            url: `api/addcard`,
-            headers: { "Content-Type": "application/json" },
-            method: 'post',
-            data: card
-        }) as any
-    },
-    editCard(card: cardType) {
-        return req({
-            url: `api/editcard`,
-            headers: { "Content-Type": "application/json" },
-            method: 'post',
-            data: card
-        }) as any
-    },
-    delCard(id: number) {
-        return req({
-            url: `api/card`,
-            method: 'delete',
-            params: { id: id }
-        }) as any
     }
 }

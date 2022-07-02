@@ -1,6 +1,6 @@
 <template>
     <el-dialog v-model="IsShow" title="新增卡牌" width="25%" :before-close="handleClose">
-        <el-form label-position="right" label-width="25%" :rules="formRules" :model="form" ref="ruleFormRef">
+        <el-form label-position="right" label-width="25%" :model="form" ref="ruleFormRef" disabled="true">
             <el-form-item label="卡牌类型" prop="type">
                 <el-select v-model="form.type" placeholder="请选择卡牌类型">
                     <el-option v-for="item in typeOptions" :key="item.value" :label="item.label" :value="item.value" />
@@ -15,9 +15,10 @@
                 <el-input v-model="form.front" />
             </el-form-item>
             <el-form-item label="卡牌描述" prop="back">
-                <el-input v-model="form.back" type="textarea" />
+                <el-input v-model="form.back" type="textarea" autosize />
             </el-form-item>
         </el-form>
+
         <template #footer>
             <span class="dialog-footer">
                 <el-button type="primary" @click="handleConfirm">确认</el-button>
@@ -87,14 +88,7 @@ const handleClose = () => {//新增弹窗内点击取消
     IsShow.value = false;
 }
 const handleConfirm = () => {//新增弹窗内点击确定
-    //调用piniaAction：store.addCard()函数
-    if (!cardId.value) {
-        store.addCard(form);
-    } else {
-        console.log('form', form)
-        store.editCard({ id: cardId.value, ...form })
-    }
-    // 传入参数：form，返回空值
+
     emit("closePopup", false)
     page.value = 1;
     ruleFormRef.value?.resetFields();

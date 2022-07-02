@@ -3,18 +3,11 @@
         <CardFilte />
         <CardPopup :IsShow="dialogVisible" :cardId="cardId" @closePopup="closePopup" />
         <div id="tableBox">
-            <el-container>
-                <el-header>
-                    <el-col :span="4">
-                        <el-button id="addBtn" @click="handleAdd">新增</el-button>
-                        <el-button type="danger" id="addBtn" @click="handleDelet">删除</el-button>
-                    </el-col>
+            <el-main>
+                <el-scrollbar max-height="62vh">
 
-                </el-header>
-                <el-main>
-                    <el-table :data="cardTableData" stripe style="width: 100% ;height: 120%" table-layout="fixed"
-                        max-height="800" @selection-change="handleSelectionChange" ref="multipleTableRef">
-                        <el-table-column type="selection" />
+                    <el-table :data="cardTableData" stripe style="width: 100% ;height: 100%" table-layout="fixed"
+                        max-height="900">
                         <el-table-column prop="id" label="卡牌编号" min-width="50" align="center" />
                         <el-table-column prop="front" label="卡牌名称" min-width="200"
                             :align="showBack ? 'left' : 'center'" />
@@ -25,16 +18,18 @@
                         <el-table-column prop="author" label="作者" min-width="150" align="center" v-if="showAuthor" />
                         <el-table-column label="操作" align="center" min-width="50">
                             <template #default="{ row }">
-                                <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>
+                                <el-button size="small" @click="handleEdit(row.id)">查看</el-button>
                             </template>
                         </el-table-column>
 
                     </el-table>
-                    <el-pagination :page-size="pageSize" :pager-count="11" layout="prev, pager, next"
-                        :current-page="page" :total="cardTableDataTotal" @current-change="handleCurrentChange"
-                        :hide-on-single-page="true" style="margin-top: 1%;" />
-                </el-main>
-            </el-container>
+                </el-scrollbar>
+
+                <el-pagination :page-size="pageSize" :pager-count="11" layout="prev, pager, next" :current-page="page"
+                    :total="cardTableDataTotal" @current-change="handleCurrentChange" :hide-on-single-page="true"
+                    style="margin-top: 1%;" />
+            </el-main>
+
         </div>
 
     </div>
@@ -56,8 +51,6 @@ const cardId = ref(0)
 const store = mainStore();
 const { cardTableData, cardTableDataTotal, page, pageSize } = storeToRefs(store);
 const dialogVisible = ref(false);
-const multipleTableRef = ref<InstanceType<typeof ElTable>>()
-const multipleSelection = ref<cardType[]>([])
 
 const openPopup = () => dialogVisible.value = true;
 const closePopup = () => {
@@ -73,11 +66,7 @@ const handleCurrentChange = (val: number) => {
 }
 
 
-const handleSelectionChange = (val: cardType[]) => {
-    // console.log('multipleSelection.value', multipleSelection.value)
-    // console.log('val', val)
-    multipleSelection.value = val
-};
+
 //在挂载前调用一次getCard
 onBeforeMount(
     store.getCard({ page: page.value, pageSize: pageSize.value }) as any
@@ -94,45 +83,6 @@ const handleEdit = function (rowId: number) {
     cardId.value = rowId
     // console.log('cardId.value', cardId.value)
     openPopup()
-}
-
-// 删除handel函数
-const handleDelet = function () {
-    //do nothing
-    // 先判断是否有选中，如果没有直接返回
-    if (multipleSelection.value.length == 0) {
-        ElMessage({
-            message: h('p', null, [
-                h('span', null, '你没有选中任何卡牌，无法删除。'),
-            ]),
-        })
-        return null
-    }
-    ElMessageBox.confirm(
-        '你确认要删除这些卡牌吗？',
-        '删除卡牌',
-        {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-        }
-    )
-        .then(() => {
-            let idArr: (number | undefined)[] = multipleSelection.value.map(item => item.id)
-            store.deleteCard(idArr)
-            ElMessage({
-                type: 'success',
-                message: '成功删除卡牌',
-            })
-        })
-        .catch(() => {
-            ElMessage({
-                type: 'info',
-                message: '删除取消',
-            })
-        })
-    // 如果选中，弹窗确认要删除
-    // store.deleteCard
 }
 const showBack = ref(true)
 const showAuthor = ref(true)
@@ -154,7 +104,6 @@ watch(cardTableData, (val: cardType[]) => {
 }
 
 #tableBox {
-    height: 100%;
     background-color: white;
     margin: 1%;
     margin-right: 1%;
