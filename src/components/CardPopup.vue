@@ -12,7 +12,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="卡牌名" prop="front">
-                <el-input v-model="form.front" />
+                <el-input v-model="form.front" type="textarea" autosize />
             </el-form-item>
             <el-form-item label="卡牌描述" prop="back">
                 <el-input v-model="form.back" type="textarea" autosize />
