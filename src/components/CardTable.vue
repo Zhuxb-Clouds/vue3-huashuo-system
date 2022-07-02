@@ -12,24 +12,27 @@
 
                 </el-header>
                 <el-main>
-                    <el-table :data="cardTableData" stripe style="width: 100% ;height: 120%" table-layout="fixed"
-                        max-height="800" @selection-change="handleSelectionChange" ref="multipleTableRef">
-                        <el-table-column type="selection" />
-                        <el-table-column prop="id" label="卡牌编号" min-width="50" align="center" />
-                        <el-table-column prop="front" label="卡牌名称" min-width="200"
-                            :align="showBack ? 'left' : 'center'" />
-                        <el-table-column prop="back" label="卡牌描述" width="700" :show-overflow-tooltip="1" v-if="showBack"
-                            align="center" />
-                        <el-table-column prop="type" label="卡牌类型" min-width="150" align="center" />
-                        <el-table-column prop="pack" label="从属包" min-width="150" align="center" />
-                        <el-table-column prop="author" label="作者" min-width="150" align="center" v-if="showAuthor" />
-                        <el-table-column label="操作" align="center" min-width="50">
-                            <template #default="{ row }">
-                                <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>
-                            </template>
-                        </el-table-column>
+                    <el-scrollbar max-height="62vh">
+                        <el-table :data="cardTableData" stripe style="width: 100% ;height: 120%" table-layout="fixed"
+                            max-height="800" @selection-change="handleSelectionChange" ref="multipleTableRef">
+                            <el-table-column type="selection" />
+                            <el-table-column prop="id" label="卡牌编号" min-width="50" align="center" />
+                            <el-table-column prop="front" label="卡牌名称" min-width="200"
+                                :align="showBack ? 'left' : 'center'" />
+                            <el-table-column prop="back" label="卡牌描述" width="700" :show-overflow-tooltip="1"
+                                v-if="showBack" align="center" />
+                            <el-table-column prop="type" label="卡牌类型" min-width="150" align="center" />
+                            <el-table-column prop="pack" label="从属包" min-width="150" align="center" />
+                            <el-table-column prop="author" label="作者" min-width="150" align="center"
+                                v-if="showAuthor" />
+                            <el-table-column label="操作" align="center" min-width="50">
+                                <template #default="{ row }">
+                                    <el-button size="small" @click="handleEdit(row.id)">编辑</el-button>
+                                </template>
+                            </el-table-column>
 
-                    </el-table>
+                        </el-table>
+                    </el-scrollbar>
                     <el-pagination :page-size="pageSize" :pager-count="11" layout="prev, pager, next"
                         :current-page="page" :total="cardTableDataTotal" @current-change="handleCurrentChange"
                         :hide-on-single-page="true" style="margin-top: 1%;" />
