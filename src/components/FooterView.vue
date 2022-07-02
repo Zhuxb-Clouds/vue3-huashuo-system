@@ -12,14 +12,15 @@
 <style scoped>
 .footerView {
 
-    position: absolute; 
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px; 
+    height: 100px;
 }
-.author{
-    font-weight: bold;
+
+.author {
+    /* font-weight: bold; */
     font-size: 20px;
 }
 </style>

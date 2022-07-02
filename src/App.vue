@@ -13,7 +13,7 @@
 
 <style>
 #app {
-  font-family: "Noto Serif SC", serif;
+  font-family: SerifCN;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
