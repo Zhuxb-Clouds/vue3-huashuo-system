@@ -1,6 +1,5 @@
 <template>
     <div>
-        <CardFilte />
         <CardPopup :IsShow="dialogVisible" :cardId="cardId" @closePopup="closePopup" />
         <div id="tableBox">
             <el-container>
@@ -43,8 +42,7 @@
 </template>
 
 <script setup lang="ts">
-// import CardFilte from "./CardFilte.vue";
-import { ref, h, onBeforeMount, reactive, watch } from 'vue'
+import { ref, h, onBeforeMount, watch } from 'vue'
 import { ElTable, ElMessage, ElMessageBox } from 'element-plus'
 import { storeToRefs } from 'pinia';
 import CardPopup from "./CardPopup.vue";

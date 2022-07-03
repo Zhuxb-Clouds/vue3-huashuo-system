@@ -6,7 +6,12 @@ const router = createRouter({
         {
             path: '/cardtable',
             name: 'cardtable',
-            component: () => import('../page/CardCURD.vue')
+            component: () => import('../page/CardCURD.vue'),
+            beforeEnter: (to, from) => {
+                if (!localStorage.getItem("token")) {
+                    return false
+                }
+            },
         }, {
             path: '/Login',
             name: 'Login',
