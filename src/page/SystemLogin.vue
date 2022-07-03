@@ -32,7 +32,7 @@ async function checkLogin() {
     } else {
         ElMessage.error({
             message: h('p', null, [
-                h('span', { style: 'color: black;  font-family: SerifCN;' }, '登录失败'),
+                h('span', { style: 'color: black;  font-family: serif;' }, '登录失败'),
             ]),
         })
     }
@@ -58,7 +58,7 @@ if (localStorage.getItem('token') != null) {
         url("../assets/Logo.webp") no-repeat 120% 30% / 45%;
     background-attachment: fixed;
     /* background-color: rgb(240, 240, 240); */
-    font-family: SerifCN;
+    font-family: 'Noto Serif SC', serif;
 }
 
 .box {
@@ -112,8 +112,8 @@ input:focus-visible {
     font-size: 1rem;
     background-color: rgba(0, 0, 0, 0.829);
     color: white;
-    /* font-weight: bold; */
-    font-family: SerifCN;
+    font-weight: 600;
+    font-family: 'Noto Serif SC', serif;
     border: none;
     border-radius: 5px;
     cursor: pointer;
