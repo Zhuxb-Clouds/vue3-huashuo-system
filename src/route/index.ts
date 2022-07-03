@@ -8,7 +8,10 @@ const router = createRouter({
             name: 'cardtable',
             component: () => import('../page/CardCURD.vue'),
             beforeEnter: (to, from) => {
+                console.log('to', to)
+                console.log('from', from)
                 if (!localStorage.getItem("token")) {
+                    router.push({ name: 'Login' });
                     return false
                 }
             },
