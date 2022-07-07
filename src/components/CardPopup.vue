@@ -76,7 +76,7 @@ const ruleFormRef = ref<FormInstance>()
 const formRules = reactive<FormRules>({
     type: [{ required: true }],
     pack: [{ required: true }],
-    front: [{ required: true, min: 1, max: 30, }],
+    front: [{ required: true, min: 1, max: 50, }],
 })
 
 

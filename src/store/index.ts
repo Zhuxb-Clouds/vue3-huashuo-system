@@ -54,5 +54,6 @@ export const mainStore = defineStore('main', {
     },
     search(type: number, pack: number, keyword: string) { this.searchQuery = { type: type, pack: pack, keyword: keyword } },
     pageChange(page: number) { this.page = page },
+
   }
 })

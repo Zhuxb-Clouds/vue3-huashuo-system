@@ -28,3 +28,8 @@ export interface optionType {
     label: string;
     value: number;
 }
+
+export interface userType {
+    username: string;
+    password: string;
+}

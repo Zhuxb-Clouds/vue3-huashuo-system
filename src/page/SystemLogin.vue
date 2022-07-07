@@ -28,7 +28,7 @@ async function checkLogin() {
     if (token) {
         // console.log("通过验证", router);
         localStorage.setItem("token", token)
-        router.push({ name: 'cardtable' });
+        router.push({ name: 'Home' });
     } else {
         ElMessage.error({
             message: h('p', null, [
@@ -38,7 +38,7 @@ async function checkLogin() {
     }
 }
 if (localStorage.getItem('token') != null) {
-    router.push({ name: 'cardtable' });
+    router.push({ name: 'Home' });
 }
 
 </script >

@@ -1,11 +1,11 @@
 <template>
   <router-view></router-view>
-  <!-- <FooterFav/> -->
 </template>
 
 <script setup lang="ts">
 // import { useRouter } from 'vue-router';
-// import FooterFav from "./components/FooterView.vue";
+
+// import Home from "./page/HomePage.vue";
 
 // const router = useRouter()
 
