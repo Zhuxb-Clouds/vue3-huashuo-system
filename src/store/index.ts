@@ -51,9 +51,12 @@ export const mainStore = defineStore('main', {
       const res = await Api.getCard({ ...query, ...this.searchQuery, page: this.page }) as any;
       this.cardTableData = res.rows;
       this.cardTableDataTotal = res.count;
+      return res;
     },
     search(type: number, pack: number, keyword: string) { this.searchQuery = { type: type, pack: pack, keyword: keyword } },
     pageChange(page: number) { this.page = page },
+    // getCardData() {
 
+    // }
   }
 })

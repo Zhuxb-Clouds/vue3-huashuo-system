@@ -3,7 +3,7 @@
         <div class="title"><span>
                 话说卡牌管理系统
             </span></div>
-        <div class="welcome" v-if="!!token()">
+        <div class="welcome" v-if="!!MyName">
             欢迎您，{{ MyName }}
             <div class="select">
                 <div class="cardBox" @click="router.push({ path: '/cardtable' })">卡牌管理</div>
@@ -11,7 +11,7 @@
             </div>
             <div class="exit" @click="exit()">退出登录</div>
         </div>
-        <div class="login" @click="router.push({ path: '/Login' })" v-if="!token()" style="cursor: pointer">
+        <div class="login" @click="router.push({ path: '/cardtable' })" v-if="!MyName" style="cursor: pointer">
             请登录
         </div>
     </div>
@@ -23,7 +23,7 @@
 import api from '../api/login'
 import router from '../route/index'
 import FooterFav from "../components/FooterView.vue";
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 async function token() {
     if (localStorage.getItem("token")) {
         const user = await api.whoami();
@@ -36,6 +36,9 @@ function exit() {
     router.push({ path: '/Login' });
 }
 let MyName = ref("")
+onMounted(() => {
+    token();
+})
 </script>
 
 <style scoped>

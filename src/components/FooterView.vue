@@ -2,6 +2,10 @@
     <div class="footerView">
         <div class="author">朱仙变</div>
         <div class="info">飞雪工作室-2022</div>
+        <div id="icp">
+            <a href="https://beian.miit.gov.cn" target="_blank">
+                鄂ICP备2022011304号-1</a>
+        </div>
     </div>
 </template>
 

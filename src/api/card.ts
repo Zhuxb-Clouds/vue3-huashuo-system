@@ -71,5 +71,11 @@ export default {
             method: 'delete',
             params: { id: id }
         }) as any
-    }
+    },
+    // getCardData() {
+    //     return req({
+    //         url: `api/carddata`,
+    //         method: 'get',
+    //     }) as any
+    // }
 }
